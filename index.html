@@ -38,7 +38,6 @@
             position: relative;
         }
 
-        /* خلفية جزيئات ومؤثرات بصرية */
         .bg-pattern {
             position: fixed;
             top: 0;
@@ -353,7 +352,7 @@
         .menu-tabs {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
             margin-bottom: 40px;
         }
@@ -362,11 +361,11 @@
             background: rgba(43, 26, 17, 0.8);
             border: 1px solid var(--gold);
             color: var(--cream);
-            padding: 10px 22px;
+            padding: 10px 20px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: var(--transition);
         }
 
@@ -421,13 +420,13 @@
         .menu-item-prices {
             color: var(--gold);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             text-align: left;
         }
 
         .menu-item-prices span {
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #b0a498;
         }
 
@@ -703,7 +702,7 @@
         </div>
     </section>
 
-    <!-- قسم المنيو والتخصصات بالكامل -->
+    <!-- قسم المنيو والتخصصات بالكامل (شامل جميع محتويات الـ PDF) -->
     <section id="menu" class="menu-section">
         <div class="section-title">
             <h3>منيو بن رسمي الفاخر</h3>
@@ -716,15 +715,19 @@
             <button class="tab-btn" onclick="switchTab('espresso')">الإسبريسو والمختصة</button>
             <button class="tab-btn" onclick="switchTab('cold')">القهوة الباردة والآيس</button>
             <button class="tab-btn" onclick="switchTab('drinks')">المشروبات والشوكولاتة</button>
+            <button class="tab-btn" onclick="switchTab('fresh')">العصائر والفريش</button>
             <button class="tab-btn" onclick="switchTab('blends')">توليفات البن (ربع كيلو)</button>
+            <button class="tab-btn" onclick="switchTab('origins')">سنجل أورجن والإضافات</button>
         </div>
 
-        <!-- محتوى الأقسام (تم تصحيح الأ IDs لتطابق بيانات الـ JS) -->
+        <!-- محتوى الأقسام -->
         <div id="hot_coffee" class="menu-category-container active"></div>
         <div id="espresso" class="menu-category-container"></div>
         <div id="cold" class="menu-category-container"></div>
         <div id="drinks" class="menu-category-container"></div>
+        <div id="fresh" class="menu-category-container"></div>
         <div id="blends" class="menu-category-container"></div>
+        <div id="origins" class="menu-category-container"></div>
     </section>
 
     <!-- قسم التواصل والموقع بالتفصيل -->
@@ -784,7 +787,7 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- سكريبت لتوليد المنيو من بيانات الـ JSON بدقة -->
+    <!-- سكريبت لتوليد المنيو كاملاً من ملف الـ PDF -->
     <script>
         const menuData = {
             "hot_coffee": [
@@ -794,16 +797,19 @@
                 {"name": "فرنساوي محوج", "single": 40, "double": 60},
                 {"name": "قهوة بندق", "single": 40, "double": 60},
                 {"name": "شاي كلاسيك", "price": 25},
-                {"name": "شاي فليفرز / كرك", "price": 30},
-                {"name": "أعشاب طبيعية (ينسون، نعناع، كركديه، جنزبيل)", "price": 30}
+                {"name": "شاي فليفرز", "price": 30},
+                {"name": "شاي كرك", "price": 30},
+                {"name": "كوفي ميكس", "price": 30},
+                {"name": "نسكافيه بلاك", "price": 30},
+                {"name": "أعشاب (ينسون - نعناع - كركديه - جنزبيل)", "price": 30}
             ],
             "espresso": [
                 {"name": "اسبريسو", "single": 40, "double": 60},
                 {"name": "ماكياتو", "single": 45, "double": 65},
-                {"name": "كابتشينو", "price": 80},
-                {"name": "لاتيه", "price": 65},
                 {"name": "فلات وايت", "price": 80},
                 {"name": "موكا", "price": 85},
+                {"name": "كابتشينو", "price": 80},
+                {"name": "لاتيه", "price": 65},
                 {"name": "كورتادو", "price": 70},
                 {"name": "امريكانو", "price": 65},
                 {"name": "سبانيش لاتيه", "price": 75}
@@ -820,22 +826,66 @@
             ],
             "drinks": [
                 {"name": "موهيتو", "price": 60},
-                {"name": "سموزي / صودا", "price": 50},
-                {"name": "آيس شوكلت / وايت شوكلت", "price": 60},
-                {"name": "هوت شوكلت", "price": 50},
-                {"name": "هوت نوتيلا / فريرو / اوريو", "price": 65},
+                {"name": "صودا", "price": 50},
+                {"name": "سموزي", "price": 50},
+                {"name": "آيس شوكلت", "price": 60},
+                {"name": "آيس وايت شوكلت", "price": 60},
+                {"name": "آيس تي", "price": 50},
+                {"name": "آيس أبل سيدر", "price": 60},
+                {"name": "هوت نوتيلا", "price": 65},
+                {"name": "هوت فريرو روشيه", "price": 65},
+                {"name": "هوت اوريو", "price": 65},
                 {"name": "هوت بستاشيو", "price": 90},
-                {"name": "عصائر فريش (مانجو، جوافة، برتقال، فراولة)", "price": 50},
-                {"name": "ميلك شيك (فانيليا، شوكلت، لوتس، نوتيلا)", "price": 60}
+                {"name": "هوت لوتس", "price": 65},
+                {"name": "هوت كيندر", "price": 65},
+                {"name": "هوت شوكلت", "price": 50},
+                {"name": "هوت أبل سيدر", "price": 45},
+                {"name": "ميلك شيك فانيليا / شوكلت", "price": 50},
+                {"name": "اسبريسو شيك", "price": 95},
+                {"name": "ميلك شيك كاراميل", "price": 60},
+                {"name": "ميلك شيك فريرو روشيه", "price": 75},
+                {"name": "ميلك شيك كيندر", "price": 65},
+                {"name": "ميلك شيك لوتس / نوتيلا", "price": 70},
+                {"name": "ميلك شيك فروت", "price": 60}
+            ],
+            "fresh": [
+                {"name": "عصير مانجو", "price": 50},
+                {"name": "عصير جوافة", "price": 50},
+                {"name": "عصير برتقال", "price": 50},
+                {"name": "عصير فراولة", "price": 50},
+                {"name": "ليمون نعناع", "price": 50},
+                {"name": "شوت اسبريسو (إضافة)", "price": 25},
+                {"name": "فليفرز (إضافة)", "price": 15},
+                {"name": "لبن (إضافة)", "price": 20},
+                {"name": "مكسرات (إضافة)", "price": 25},
+                {"name": "ويبيد كريم (إضافة)", "price": 20},
+                {"name": "ايس كريم (إضافة)", "price": 20}
             ],
             "blends": [
                 {"type": "روبيستا فاتح", "sada": "140 ج.م", "mahawag": "170 ج.م"},
                 {"type": "روبيستا وسط", "sada": "150 ج.م", "mahawag": "180 ج.م"},
+                {"type": "روبيستا غامق", "sada": "160 ج.م", "mahawag": "190 ج.م"},
+                {"type": "سبيشيال فاتح", "sada": "160 ج.م", "mahawag": "190 ج.م"},
                 {"type": "سبيشيال وسط", "sada": "170 ج.م", "mahawag": "200 ج.م"},
+                {"type": "سبيشيال غامق", "sada": "180 ج.م", "mahawag": "210 ج.م"},
+                {"type": "سوبر فاتح", "sada": "180 ج.م", "mahawag": "210 ج.م"},
                 {"type": "سوبر وسط", "sada": "190 ج.م", "mahawag": "220 ج.م"},
+                {"type": "بريميم فاتح", "sada": "210 ج.م", "mahawag": "240 ج.م"},
                 {"type": "بريميم وسط", "sada": "220 ج.م", "mahawag": "250 ج.م"},
+                {"type": "بريميم غامق", "sada": "230 ج.م", "mahawag": "260 ج.م"},
+                {"type": "ارابيكا فاتح", "sada": "240 ج.م", "mahawag": "270 ج.م"},
                 {"type": "ارابيكا وسط", "sada": "250 ج.م", "mahawag": "280 ج.م"},
                 {"type": "رسمي وسط (مميز)", "sada": "280 ج.م", "mahawag": "310 ج.م"}
+            ],
+            "origins": [
+                {"name": "برازيلي سانتوس / كولومبي دارك / سوبريم", "price": "حسب الطلب"},
+                {"name": "جواتيمالا / إيلي / فاين كاب", "price": "حسب الطلب"},
+                {"name": "نيكاراجوا / هندي بلانتيشن / ارابيكا", "price": "حسب الطلب"},
+                {"name": "إثيوبي سيدامو / كوستاريكا / هندوراس", "price": "حسب الطلب"},
+                {"name": "يمني عدني / حبشي هراري / هامبلا", "price": "حسب الطلب"},
+                {"name": "يمني خولاني / يمني موكا", "price": "حسب الطلب"},
+                {"name": "إضافة تحويجة للـ 250جم", "price": "30 ج.م"},
+                {"name": "إضافة مستكة للـ 250جم", "price": "50 ج.م"}
             ]
         };
 
@@ -849,10 +899,9 @@
                                 <h5>${item.name || item.type}</h5>
                             </div>
                             <div class="menu-item-prices">
-                                ${item.price ? `${item.price} ج.م` : ''}
+                                ${item.price ? `${item.price}` : ''}
                                 ${item.single ? `سنجل: ${item.single} ج.م<br>دبل: ${item.double} ج.م` : ''}
-                                ${item.sada ? `سادة: ${item.sada}<br>محوج: ${item.mahawag}` : ''}
-                                <span>(للربع 250جم / كوب)</span>
+                                ${item.sada ? `سادة: ${item.sada}<br>محوج: ${item.mahawag}<span>(للربع 250جم)</span>` : ''}
                             </div>
                         </div>
                     `).join('');
