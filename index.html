@@ -19,7 +19,7 @@
             --gold: #d4af37;
             --gold-light: #f3e5ab;
             --cream: #fdfbf7;
-            --card-bg: rgba(43, 26, 17, 0.85);
+            --card-bg: rgba(43, 26, 17, 0.9);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -148,7 +148,6 @@
             overflow: hidden;
         }
 
-        /* تنسيق وتشغيل خلفية الفيديو */
         .hero-video-bg {
             position: absolute;
             top: 0;
@@ -159,7 +158,6 @@
             z-index: 0;
         }
 
-        /* طبقة تعتيم فوق الفيديو لضمان وضوح النصوص */
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -226,7 +224,6 @@
             color: var(--primary-dark);
         }
 
-        /* عنصر 3D متحرك بصرياً */
         .hero-3d-visual {
             position: relative;
             width: 450px;
@@ -269,10 +266,10 @@
             50% { transform: translateY(-15px) rotate(1deg); }
         }
 
-        /* قسم المميزات / المعرض */
+        /* عنوان الأقسام */
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .section-title h3 {
@@ -346,52 +343,92 @@
             font-size: 0.95rem;
         }
 
-        /* قسم المنيو / المنتجات */
+        /* قسم المنيو التفاعلي الفاخر */
         .menu-section {
             padding: 100px 8%;
             background-color: var(--primary-dark);
         }
 
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        /* أزرار تبديل أقسام المنيو */
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
         }
 
-        .menu-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--gold);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
-        }
-
-        .menu-card i {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .menu-card h4 {
-            font-size: 1.5rem;
+        .tab-btn {
+            background: rgba(43, 26, 17, 0.8);
+            border: 1px solid var(--gold);
             color: var(--cream);
-            margin-bottom: 10px;
-            font-family: 'Amiri', serif;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: var(--transition);
         }
 
-        .menu-card p {
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--gold);
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .menu-category-container {
+            display: none;
+        }
+
+        .menu-category-container.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .menu-item-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 25px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .menu-item-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .menu-item-info h5 {
+            color: var(--cream);
+            font-size: 1.2rem;
+            font-family: 'Amiri', serif;
+            margin-bottom: 5px;
+        }
+
+        .menu-item-prices {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: left;
+        }
+
+        .menu-item-prices span {
+            display: block;
+            font-size: 0.9rem;
             color: #b0a498;
-            font-size: 1rem;
-            line-height: 1.6;
         }
 
         /* قسم التواصل والموقع */
@@ -454,7 +491,6 @@
             font-size: 1rem;
         }
 
-        /* تنسيق أيقونات السوشيال ميديا */
         .social-links-box {
             display: flex;
             gap: 15px;
@@ -568,7 +604,6 @@
             background-color: #20ba5a;
         }
 
-        /* متجاوب مع الشاشات الصغيرة */
         @media(max-width: 968px) {
             .hero {
                 flex-direction: column;
@@ -607,21 +642,19 @@
             <ul>
                 <li><a href="#home">الرئيسية</a></li>
                 <li><a href="#gallery">المعرض الفاخر</a></li>
-                <li><a href="#menu">تخصصاتنا</a></li>
+                <li><a href="#menu">المنيو والأسعار</a></li>
                 <li><a href="#contact">الموقع وتواصل معنا</a></li>
             </ul>
         </nav>
         <a href="tel:01503377167" class="header-btn"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
     </header>
 
-    <!-- الواجهة الرئيسية مع الفيديو المتحرك في الخلفية -->
+    <!-- الواجهة الرئيسية -->
     <section id="home" class="hero">
-        <!-- خلفية فيديو متحركة من مجلد المشروع -->
         <video autoplay muted loop playsinline class="hero-video-bg">
             <source src="coffee-bg.mp4" type="video/mp4">
             متصفحك لا يدعم عرض الفيديو
         </video>
-        <!-- طبقة التعتيم الفخمة -->
         <div class="hero-overlay"></div>
 
         <div class="hero-content animate__animated animate__fadeInRight">
@@ -634,13 +667,12 @@
         </div>
         <div class="hero-3d-visual animate__animated animate__zoomIn">
             <div class="floating-card">
-                <!-- صورة الهوية واللوجو الخاصة بالمحل -->
                 <img src="455158284_813054657652609_8447937597693678148_n.jpg" alt="Rasmy's Coffee Logo">
             </div>
         </div>
     </section>
 
-    <!-- قسم المعرض والرسومات 3D الفاخرة -->
+    <!-- معرض الصور -->
     <section id="gallery" class="gallery-section">
         <div class="section-title">
             <h3>معرض الصور والأجواء الملكية</h3>
@@ -671,29 +703,28 @@
         </div>
     </section>
 
-    <!-- قسم المنيو والتخصصات -->
+    <!-- قسم المنيو والتخصصات بالكامل -->
     <section id="menu" class="menu-section">
         <div class="section-title">
-            <h3>ما نقدمه في Rasmy's Coffee</h3>
-            <p>توليفة مختارة خصيصاً لعشاق المزاج العالي</p>
+            <h3>منيو بن رسمي الفاخر</h3>
+            <p>اختر صنفك المفضل وتعرّف على أسعارنا الحصرية</p>
         </div>
-        <div class="menu-grid">
-            <div class="menu-card">
-                <i class="fas fa-mug-hot"></i>
-                <h4>القهوة التركية الأصيلة</h4>
-                <p>معدة على أصولها ببن "رسمي" الخاص والمميز، برغوة غنية ونكهة تأسر السنتين.</p>
-            </div>
-            <div class="menu-card">
-                <i class="fas fa-coffee"></i>
-                <h4>الإسبريسو والقهوة المختصة</h4>
-                <p>مشروبات إسبريسو غنية ومحضرة بأحدث الماكينات العالمية مع لمسات الفن والرسم على القهوة (Latte Art).</p>
-            </div>
-            <div class="menu-card">
-                <i class="fas fa-glass-whiskey"></i>
-                <h4>القهوة الباردة والمثلجة</h4>
-                <p>أفضل المشروبات الباردة المنعشة المثالية لأجواء البحر والمصيف المميزة.</p>
-            </div>
+
+        <!-- أزرار الأقسام -->
+        <div class="menu-tabs">
+            <button class="tab-btn active" onclick="switchTab('hot_coffee')">المشروبات الساخنة والتركي</button>
+            <button class="tab-btn" onclick="switchTab('espresso')">الإسبريسو والمختصة</button>
+            <button class="tab-btn" onclick="switchTab('cold')">القهوة الباردة والآيس</button>
+            <button class="tab-btn" onclick="switchTab('drinks')">المشروبات والشوكولاتة</button>
+            <button class="tab-btn" onclick="switchTab('blends')">توليفات البن (ربع كيلو)</button>
         </div>
+
+        <!-- محتوى الأقسام (تم تصحيح الأ IDs لتطابق بيانات الـ JS) -->
+        <div id="hot_coffee" class="menu-category-container active"></div>
+        <div id="espresso" class="menu-category-container"></div>
+        <div id="cold" class="menu-category-container"></div>
+        <div id="drinks" class="menu-category-container"></div>
+        <div id="blends" class="menu-category-container"></div>
     </section>
 
     <!-- قسم التواصل والموقع بالتفصيل -->
@@ -707,7 +738,7 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <div>
                         <h5>العنوان بالتفصيل</h5>
-                        <p>طرح البحر -بجوار قرية النورس - بجانب سينما النورس</p>
+                        <p>طرح البحر - بجوار قرية النورس - بجانب سينما النور</p>
                     </div>
                 </div>
 
@@ -738,10 +769,9 @@
         </div>
     </section>
 
-    <!-- الفوتر مع حقوق BTA وحسابات السوشيال ميديا -->
+    <!-- الفوتر مع حقوق BTA -->
     <footer>
-        <p>جميع الحقوق محفوظة &copy; 2026 <span>BTA system solutions</span>
-        عنوان ممر الطوارئ قريه جنه النورس رقم الهاتف 01205062357 </p>
+        <p>جميع الحقوق محفوظة &copy; 2026 <span>BTA system solutions</span> | عنوان ممر الطوارئ قرية جنة النورس - ت: 01205062357</p>
         <div class="footer-social">
             <a href="https://www.facebook.com/RasmyCoffee" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/rasmy.s_coffee" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
@@ -749,10 +779,96 @@
         </div>
     </footer>
 
-    <!-- زر الواتساب السريع -->
+    <!-- زر الواتساب العائم -->
     <a href="https://wa.me/201503377167" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- سكريبت لتوليد المنيو من بيانات الـ JSON بدقة -->
+    <script>
+        const menuData = {
+            "hot_coffee": [
+                {"name": "قهوة تركي", "single": 25, "double": 40},
+                {"name": "تركي محوج", "single": 30, "double": 50},
+                {"name": "قهوة فرنساوي", "single": 35, "double": 50},
+                {"name": "فرنساوي محوج", "single": 40, "double": 60},
+                {"name": "قهوة بندق", "single": 40, "double": 60},
+                {"name": "شاي كلاسيك", "price": 25},
+                {"name": "شاي فليفرز / كرك", "price": 30},
+                {"name": "أعشاب طبيعية (ينسون، نعناع، كركديه، جنزبيل)", "price": 30}
+            ],
+            "espresso": [
+                {"name": "اسبريسو", "single": 40, "double": 60},
+                {"name": "ماكياتو", "single": 45, "double": 65},
+                {"name": "كابتشينو", "price": 80},
+                {"name": "لاتيه", "price": 65},
+                {"name": "فلات وايت", "price": 80},
+                {"name": "موكا", "price": 85},
+                {"name": "كورتادو", "price": 70},
+                {"name": "امريكانو", "price": 65},
+                {"name": "سبانيش لاتيه", "price": 75}
+            ],
+            "cold": [
+                {"name": "آيس لاتيه", "price": 65},
+                {"name": "آيس سبانيش لاتيه", "price": 80},
+                {"name": "آيس موكا", "price": 90},
+                {"name": "آيس وايت موكا", "price": 90},
+                {"name": "آيس كاراميل ماكياتو", "price": 90},
+                {"name": "آيس امريكانو", "price": 65},
+                {"name": "فرابيه", "price": 80},
+                {"name": "افوجاتو", "price": 65}
+            ],
+            "drinks": [
+                {"name": "موهيتو", "price": 60},
+                {"name": "سموزي / صودا", "price": 50},
+                {"name": "آيس شوكلت / وايت شوكلت", "price": 60},
+                {"name": "هوت شوكلت", "price": 50},
+                {"name": "هوت نوتيلا / فريرو / اوريو", "price": 65},
+                {"name": "هوت بستاشيو", "price": 90},
+                {"name": "عصائر فريش (مانجو، جوافة، برتقال، فراولة)", "price": 50},
+                {"name": "ميلك شيك (فانيليا، شوكلت، لوتس، نوتيلا)", "price": 60}
+            ],
+            "blends": [
+                {"type": "روبيستا فاتح", "sada": "140 ج.م", "mahawag": "170 ج.م"},
+                {"type": "روبيستا وسط", "sada": "150 ج.م", "mahawag": "180 ج.م"},
+                {"type": "سبيشيال وسط", "sada": "170 ج.م", "mahawag": "200 ج.م"},
+                {"type": "سوبر وسط", "sada": "190 ج.م", "mahawag": "220 ج.م"},
+                {"type": "بريميم وسط", "sada": "220 ج.م", "mahawag": "250 ج.م"},
+                {"type": "ارابيكا وسط", "sada": "250 ج.م", "mahawag": "280 ج.م"},
+                {"type": "رسمي وسط (مميز)", "sada": "280 ج.م", "mahawag": "310 ج.م"}
+            ]
+        };
+
+        function renderMenu() {
+            for (let category in menuData) {
+                const container = document.getElementById(category);
+                if(container) {
+                    container.innerHTML = menuData[category].map(item => `
+                        <div class="menu-item-card">
+                            <div class="menu-item-info">
+                                <h5>${item.name || item.type}</h5>
+                            </div>
+                            <div class="menu-item-prices">
+                                ${item.price ? `${item.price} ج.م` : ''}
+                                ${item.single ? `سنجل: ${item.single} ج.م<br>دبل: ${item.double} ج.م` : ''}
+                                ${item.sada ? `سادة: ${item.sada}<br>محوج: ${item.mahawag}` : ''}
+                                <span>(للربع 250جم / كوب)</span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.menu-category-container').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        window.onload = renderMenu;
+    </script>
 </body>
 </html>
