@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- مكتبة Animate.css للحركات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
+
     <style>
         :root {
             --primary-dark: #1a0f0a;
@@ -623,7 +623,28 @@
                 display: none;
             }
         }
-    </style>
+
+        .menu-item-card{flex-direction:column;align-items:stretch;gap:15px}
+        .product-price{color:var(--gold);font-weight:700}
+        .menu-item-action{display:flex;align-items:center;gap:10px}
+        .item-option-select{flex:1;min-width:0;padding:10px;border-radius:8px;background:#21130d;color:var(--cream);border:1px solid rgba(212,175,55,.45);font:inherit}
+        .add-to-cart-btn{border:0;border-radius:8px;padding:10px 13px;background:var(--gold);color:var(--primary-dark);font:inherit;font-weight:800;cursor:pointer}
+        .cart-toggle{position:fixed;right:28px;bottom:30px;z-index:1001;padding:13px 18px;border:0;border-radius:40px;background:var(--gold);color:var(--primary-dark);font:inherit;font-weight:900;cursor:pointer}
+        .cart-count{display:inline-grid;place-items:center;min-width:24px;height:24px;margin-right:6px;border-radius:50%;background:#1a0f0a;color:#fff}
+        .cart-backdrop{position:fixed;inset:0;z-index:1100;background:#000a}.cart-backdrop[hidden],.cart-panel[hidden]{display:none}
+        .cart-panel{position:fixed;top:0;right:0;z-index:1101;width:min(440px,94vw);height:100dvh;display:flex;flex-direction:column;padding:22px;background:#21130d;border-left:1px solid rgba(212,175,55,.4);overflow:auto}
+        .cart-panel-header,.cart-total{display:flex;justify-content:space-between;align-items:center}.cart-panel-header h3{color:var(--gold);font-family:'Amiri',serif}
+        .cart-panel button{font:inherit;cursor:pointer}.cart-close{width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:white;font-size:22px}
+        .cart-items{display:grid;gap:12px;padding:18px 0}.cart-empty{text-align:center;padding:25px;color:#c8b9a9}
+        .cart-line{display:grid;grid-template-columns:1fr auto;gap:8px;padding:13px;border:1px solid #6f512b;border-radius:10px}
+        .cart-line p,.cart-note{color:#c8b9a9;font-size:.85rem}.cart-line strong,.cart-total{color:var(--gold-light)}
+        .cart-line-controls{grid-column:1/-1;display:flex;align-items:center;gap:8px}.cart-line-controls button{min-width:34px;height:34px;background:transparent;color:white;border:1px solid #8c5830;border-radius:7px}
+        .cart-summary{margin-top:auto;padding-top:16px;border-top:1px solid #6f512b}.cart-note{line-height:1.7}
+        .cart-checkout,.cart-clear{width:100%;min-height:46px;margin-top:8px;border-radius:8px;font-weight:800}
+        .cart-checkout{border:0;background:#25d366;color:#102c18}.cart-clear{border:1px solid #8c5830;background:transparent;color:white}
+        .cart-checkout:disabled,.cart-clear:disabled{opacity:.45}
+        @media(max-width:600px){.cart-toggle{right:14px;bottom:16px}.whatsapp-float{left:14px;bottom:16px}.cart-panel{padding:17px}.menu-category-container.active{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
@@ -706,18 +727,18 @@
     <section id="menu" class="menu-section">
         <div class="section-title">
             <h3>منيو بن رسمي الفاخر</h3>
-            <p>اختر صنفك المفضل وتعرّف على أسعارنا الحصرية</p>
+            <p>أضف أصنافك إلى السلة، ثم أرسل طلبك مباشرة عبر واتساب</p>
         </div>
 
         <!-- أزرار الأقسام -->
         <div class="menu-tabs">
-            <button class="tab-btn active" onclick="switchTab('hot_coffee')">المشروبات الساخنة والتركي</button>
-            <button class="tab-btn" onclick="switchTab('espresso')">الإسبريسو والمختصة</button>
-            <button class="tab-btn" onclick="switchTab('cold')">القهوة الباردة والآيس</button>
-            <button class="tab-btn" onclick="switchTab('drinks')">المشروبات والشوكولاتة</button>
-            <button class="tab-btn" onclick="switchTab('fresh')">العصائر والفريش</button>
-            <button class="tab-btn" onclick="switchTab('blends')">توليفات البن (ربع كيلو)</button>
-            <button class="tab-btn" onclick="switchTab('origins')">سنجل أورجن والإضافات</button>
+            <button class="tab-btn active" data-tab="hot_coffee">المشروبات الساخنة والتركي</button>
+            <button class="tab-btn" data-tab="espresso">الإسبريسو والمختصة</button>
+            <button class="tab-btn" data-tab="cold">القهوة الباردة والآيس</button>
+            <button class="tab-btn" data-tab="drinks">المشروبات والشوكولاتة</button>
+            <button class="tab-btn" data-tab="fresh">العصائر والفريش</button>
+            <button class="tab-btn" data-tab="blends">توليفات البن (ربع كيلو)</button>
+            <button class="tab-btn" data-tab="origins">سنجل أورجن والإضافات</button>
         </div>
 
         <!-- محتوى الأقسام -->
@@ -736,7 +757,7 @@
             <div class="contact-info">
                 <h3>زورنا في مقرنا ببورسعيد</h3>
                 <p>نحن بانتظارك لعيش تجربة استثنائية في عالم القهوة على البحر مباشرة.</p>
-                
+
                 <div class="info-item">
                     <i class="fas fa-map-marker-alt"></i>
                     <div>
@@ -787,137 +808,515 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <button class="cart-toggle" id="cartToggle" type="button" aria-controls="cartPanel" aria-expanded="false">سلة الطلب <span class="cart-count" id="cartCount">0</span></button>
+    <div class="cart-backdrop" id="cartBackdrop" hidden></div>
+    <aside class="cart-panel" id="cartPanel" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true" hidden>
+        <div class="cart-panel-header"><h3 id="cartTitle">سلة الطلب</h3><button class="cart-close" id="cartClose" type="button" aria-label="إغلاق السلة">×</button></div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-summary"><div class="cart-total"><span id="cartTotalLabel">الإجمالي</span><span id="cartTotal">0 ج.م</span></div>
+        <p class="cart-note" id="cartNote">راجع طلبك ثم أرسله إلى بن رسمي عبر واتساب.</p>
+        <button class="cart-checkout" id="cartCheckout" type="button" disabled>إرسال الطلب عبر واتساب</button>
+        <button class="cart-clear" id="cartClear" type="button" disabled>إفراغ السلة</button></div>
+    </aside>
     <!-- سكريبت لتوليد المنيو كاملاً من ملف الـ PDF -->
     <script>
         const menuData = {
-            "hot_coffee": [
-                {"name": "قهوة تركي", "single": 25, "double": 40},
-                {"name": "تركي محوج", "single": 30, "double": 50},
-                {"name": "قهوة فرنساوي", "single": 35, "double": 50},
-                {"name": "فرنساوي محوج", "single": 40, "double": 60},
-                {"name": "قهوة بندق", "single": 40, "double": 60},
-                {"name": "شاي كلاسيك", "price": 25},
-                {"name": "شاي فليفرز", "price": 30},
-                {"name": "شاي كرك", "price": 30},
-                {"name": "كوفي ميكس", "price": 30},
-                {"name": "نسكافيه بلاك", "price": 30},
-                {"name": "أعشاب (ينسون - نعناع - كركديه - جنزبيل)", "price": 30}
-            ],
-            "espresso": [
-                {"name": "اسبريسو", "single": 40, "double": 60},
-                {"name": "ماكياتو", "single": 45, "double": 65},
-                {"name": "فلات وايت", "price": 80},
-                {"name": "موكا", "price": 85},
-                {"name": "كابتشينو", "price": 80},
-                {"name": "لاتيه", "price": 65},
-                {"name": "كورتادو", "price": 70},
-                {"name": "امريكانو", "price": 65},
-                {"name": "سبانيش لاتيه", "price": 75}
-            ],
-            "cold": [
-                {"name": "آيس لاتيه", "price": 65},
-                {"name": "آيس سبانيش لاتيه", "price": 80},
-                {"name": "آيس موكا", "price": 90},
-                {"name": "آيس وايت موكا", "price": 90},
-                {"name": "آيس كاراميل ماكياتو", "price": 90},
-                {"name": "آيس امريكانو", "price": 65},
-                {"name": "فرابيه", "price": 80},
-                {"name": "افوجاتو", "price": 65}
-            ],
-            "drinks": [
-                {"name": "موهيتو", "price": 60},
-                {"name": "صودا", "price": 50},
-                {"name": "سموزي", "price": 50},
-                {"name": "آيس شوكلت", "price": 60},
-                {"name": "آيس وايت شوكلت", "price": 60},
-                {"name": "آيس تي", "price": 50},
-                {"name": "آيس أبل سيدر", "price": 60},
-                {"name": "هوت نوتيلا", "price": 65},
-                {"name": "هوت فريرو روشيه", "price": 65},
-                {"name": "هوت اوريو", "price": 65},
-                {"name": "هوت بستاشيو", "price": 90},
-                {"name": "هوت لوتس", "price": 65},
-                {"name": "هوت كيندر", "price": 65},
-                {"name": "هوت شوكلت", "price": 50},
-                {"name": "هوت أبل سيدر", "price": 45},
-                {"name": "ميلك شيك فانيليا / شوكلت", "price": 50},
-                {"name": "اسبريسو شيك", "price": 95},
-                {"name": "ميلك شيك كاراميل", "price": 60},
-                {"name": "ميلك شيك فريرو روشيه", "price": 75},
-                {"name": "ميلك شيك كيندر", "price": 65},
-                {"name": "ميلك شيك لوتس / نوتيلا", "price": 70},
-                {"name": "ميلك شيك فروت", "price": 60}
-            ],
-            "fresh": [
-                {"name": "عصير مانجو", "price": 50},
-                {"name": "عصير جوافة", "price": 50},
-                {"name": "عصير برتقال", "price": 50},
-                {"name": "عصير فراولة", "price": 50},
-                {"name": "ليمون نعناع", "price": 50},
-                {"name": "شوت اسبريسو (إضافة)", "price": 25},
-                {"name": "فليفرز (إضافة)", "price": 15},
-                {"name": "لبن (إضافة)", "price": 20},
-                {"name": "مكسرات (إضافة)", "price": 25},
-                {"name": "ويبيد كريم (إضافة)", "price": 20},
-                {"name": "ايس كريم (إضافة)", "price": 20}
-            ],
-            "blends": [
-                {"type": "روبيستا فاتح", "sada": "140 ج.م", "mahawag": "170 ج.م"},
-                {"type": "روبيستا وسط", "sada": "150 ج.م", "mahawag": "180 ج.م"},
-                {"type": "روبيستا غامق", "sada": "160 ج.م", "mahawag": "190 ج.م"},
-                {"type": "سبيشيال فاتح", "sada": "160 ج.م", "mahawag": "190 ج.م"},
-                {"type": "سبيشيال وسط", "sada": "170 ج.م", "mahawag": "200 ج.م"},
-                {"type": "سبيشيال غامق", "sada": "180 ج.م", "mahawag": "210 ج.م"},
-                {"type": "سوبر فاتح", "sada": "180 ج.م", "mahawag": "210 ج.م"},
-                {"type": "سوبر وسط", "sada": "190 ج.م", "mahawag": "220 ج.م"},
-                {"type": "بريميم فاتح", "sada": "210 ج.م", "mahawag": "240 ج.م"},
-                {"type": "بريميم وسط", "sada": "220 ج.م", "mahawag": "250 ج.م"},
-                {"type": "بريميم غامق", "sada": "230 ج.م", "mahawag": "260 ج.م"},
-                {"type": "ارابيكا فاتح", "sada": "240 ج.م", "mahawag": "270 ج.م"},
-                {"type": "ارابيكا وسط", "sada": "250 ج.م", "mahawag": "280 ج.م"},
-                {"type": "رسمي وسط (مميز)", "sada": "280 ج.م", "mahawag": "310 ج.م"}
-            ],
-            "origins": [
-                {"name": "برازيلي سانتوس / كولومبي دارك / سوبريم", "price": "حسب الطلب"},
-                {"name": "جواتيمالا / إيلي / فاين كاب", "price": "حسب الطلب"},
-                {"name": "نيكاراجوا / هندي بلانتيشن / ارابيكا", "price": "حسب الطلب"},
-                {"name": "إثيوبي سيدامو / كوستاريكا / هندوراس", "price": "حسب الطلب"},
-                {"name": "يمني عدني / حبشي هراري / هامبلا", "price": "حسب الطلب"},
-                {"name": "يمني خولاني / يمني موكا", "price": "حسب الطلب"},
-                {"name": "إضافة تحويجة للـ 250جم", "price": "30 ج.م"},
-                {"name": "إضافة مستكة للـ 250جم", "price": "50 ج.م"}
-            ]
-        };
-
-        function renderMenu() {
-            for (let category in menuData) {
-                const container = document.getElementById(category);
-                if(container) {
-                    container.innerHTML = menuData[category].map(item => `
-                        <div class="menu-item-card">
-                            <div class="menu-item-info">
-                                <h5>${item.name || item.type}</h5>
-                            </div>
-                            <div class="menu-item-prices">
-                                ${item.price ? `${item.price}` : ''}
-                                ${item.single ? `سنجل: ${item.single} ج.م<br>دبل: ${item.double} ج.م` : ''}
-                                ${item.sada ? `سادة: ${item.sada}<br>محوج: ${item.mahawag}<span>(للربع 250جم)</span>` : ''}
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            }
+    "hot_coffee": [
+        {
+            "name": "قهوة تركي",
+            "single": 25,
+            "double": 40
+        },
+        {
+            "name": "تركي محوج",
+            "single": 30,
+            "double": 50
+        },
+        {
+            "name": "قهوة فرنساوي",
+            "single": 35,
+            "double": 50
+        },
+        {
+            "name": "فرنساوي محوج",
+            "single": 40,
+            "double": 60
+        },
+        {
+            "name": "قهوة بندق",
+            "single": 40,
+            "double": 60
+        },
+        {
+            "name": "شاي كلاسيك",
+            "price": 25
+        },
+        {
+            "name": "شاي فليفرز",
+            "price": 30
+        },
+        {
+            "name": "شاي كرك",
+            "price": 30
+        },
+        {
+            "name": "كوفي ميكس",
+            "price": 30
+        },
+        {
+            "name": "نسكافيه بلاك",
+            "price": 30
+        },
+        {
+            "name": "ينسون",
+            "price": 30
+        },
+        {
+            "name": "نعناع",
+            "price": 30
+        },
+        {
+            "name": "كركديه",
+            "price": 30
+        },
+        {
+            "name": "جنزبيل",
+            "price": 30
         }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.menu-category-container').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+    ],
+    "espresso": [
+        {
+            "name": "اسبريسو",
+            "single": 40,
+            "double": 60
+        },
+        {
+            "name": "ماكياتو",
+            "single": 45,
+            "double": 65
+        },
+        {
+            "name": "فلات وايت",
+            "price": 80
+        },
+        {
+            "name": "موكا",
+            "price": 85
+        },
+        {
+            "name": "كابتشينو",
+            "price": 80
+        },
+        {
+            "name": "لاتيه",
+            "price": 65
+        },
+        {
+            "name": "كورتادو",
+            "price": 70
+        },
+        {
+            "name": "امريكانو",
+            "price": 65
+        },
+        {
+            "name": "سبانيش لاتيه",
+            "price": 75
         }
+    ],
+    "cold": [
+        {
+            "name": "آيس لاتيه",
+            "price": 65
+        },
+        {
+            "name": "آيس سبانيش لاتيه",
+            "price": 80
+        },
+        {
+            "name": "آيس موكا",
+            "price": 90
+        },
+        {
+            "name": "آيس وايت موكا",
+            "price": 90
+        },
+        {
+            "name": "آيس كاراميل ماكياتو",
+            "price": 90
+        },
+        {
+            "name": "آيس امريكانو",
+            "price": 65
+        },
+        {
+            "name": "فرابيه",
+            "price": 80
+        },
+        {
+            "name": "افوجاتو",
+            "price": 65
+        }
+    ],
+    "drinks": [
+        {
+            "name": "موهيتو",
+            "price": 60
+        },
+        {
+            "name": "صودا",
+            "price": 50
+        },
+        {
+            "name": "سموزي",
+            "price": 50
+        },
+        {
+            "name": "آيس شوكلت",
+            "price": 55
+        },
+        {
+            "name": "آيس وايت شوكلت",
+            "price": 55
+        },
+        {
+            "name": "آيس تي",
+            "price": 50
+        },
+        {
+            "name": "آيس أبل سيدر",
+            "price": 55
+        },
+        {
+            "name": "هوت نوتيلا",
+            "price": 65
+        },
+        {
+            "name": "هوت فريرو روشيه",
+            "price": 65
+        },
+        {
+            "name": "هوت اوريو",
+            "price": 65
+        },
+        {
+            "name": "هوت بستاشيو",
+            "price": 90
+        },
+        {
+            "name": "هوت لوتس",
+            "price": 65
+        },
+        {
+            "name": "هوت كيندر",
+            "price": 65
+        },
+        {
+            "name": "هوت شوكلت",
+            "price": 50
+        },
+        {
+            "name": "هوت أبل سيدر",
+            "price": 45
+        },
+        {
+            "name": "اسبريسو شيك",
+            "price": 95
+        },
+        {
+            "name": "ميلك شيك كاراميل",
+            "price": 55
+        },
+        {
+            "name": "ميلك شيك فريرو روشيه",
+            "price": 75
+        },
+        {
+            "name": "ميلك شيك كيندر",
+            "price": 65
+        },
+        {
+            "name": "ميلك شيك فروت",
+            "price": 55
+        },
+        {
+            "name": "ميلك شيك فانيليا",
+            "price": 50
+        },
+        {
+            "name": "ميلك شيك شوكلت",
+            "price": 50
+        },
+        {
+            "name": "ميلك شيك لوتس",
+            "price": 70
+        },
+        {
+            "name": "ميلك شيك نوتيلا",
+            "price": 70
+        }
+    ],
+    "fresh": [
+        {
+            "name": "عصير مانجو",
+            "price": 50
+        },
+        {
+            "name": "عصير جوافة",
+            "price": 50
+        },
+        {
+            "name": "عصير برتقال",
+            "price": 50
+        },
+        {
+            "name": "عصير فراولة",
+            "price": 50
+        },
+        {
+            "name": "ليمون نعناع",
+            "price": 50
+        }
+    ],
+    "blends": [
+        {
+            "type": "روبيستا فاتح",
+            "sada": 140,
+            "mahawag": 170
+        },
+        {
+            "type": "روبيستا وسط",
+            "sada": 150,
+            "mahawag": 180
+        },
+        {
+            "type": "روبيستا غامق",
+            "sada": 160,
+            "mahawag": 190
+        },
+        {
+            "type": "سبيشيال فاتح",
+            "sada": 160,
+            "mahawag": 190
+        },
+        {
+            "type": "سبيشيال وسط",
+            "sada": 170,
+            "mahawag": 200
+        },
+        {
+            "type": "سبيشيال غامق",
+            "sada": 180,
+            "mahawag": 210
+        },
+        {
+            "type": "سوبر فاتح",
+            "sada": 180,
+            "mahawag": 210
+        },
+        {
+            "type": "سوبر وسط",
+            "sada": 190,
+            "mahawag": 220
+        },
+        {
+            "type": "بريميم فاتح",
+            "sada": 210,
+            "mahawag": 240
+        },
+        {
+            "type": "بريميم وسط",
+            "sada": 220,
+            "mahawag": 250
+        },
+        {
+            "type": "بريميم غامق",
+            "sada": 230,
+            "mahawag": 260
+        },
+        {
+            "type": "ارابيكا فاتح",
+            "sada": 240,
+            "mahawag": 270
+        },
+        {
+            "type": "ارابيكا وسط",
+            "sada": 250,
+            "mahawag": 280
+        },
+        {
+            "type": "رسمي وسط (مميز)",
+            "sada": 280,
+            "mahawag": 310
+        }
+    ],
+    "origins": [
+        {
+            "name": "قهوة تركي سنجل أورجن",
+            "single": 40,
+            "double": 60
+        },
+        {
+            "name": "فرنش بريس",
+            "price": 60
+        },
+        {
+            "name": "كولومبي سوبرم",
+            "price": null
+        },
+        {
+            "name": "كولومبي دارك",
+            "price": null
+        },
+        {
+            "name": "برازيلي سانتوس",
+            "price": null
+        },
+        {
+            "name": "برازيلي فاين كاب",
+            "price": null
+        },
+        {
+            "name": "برازيلي إيلي",
+            "price": null
+        },
+        {
+            "name": "جواتيمالا",
+            "price": null
+        },
+        {
+            "name": "هندي أرابيكا",
+            "price": null
+        },
+        {
+            "name": "هندي بلانتيشن",
+            "price": null
+        },
+        {
+            "name": "نيكاراجوا",
+            "price": null
+        },
+        {
+            "name": "هندوراس",
+            "price": null
+        },
+        {
+            "name": "كوستاريكا",
+            "price": null
+        },
+        {
+            "name": "أثيوبي هامبلا",
+            "price": null
+        },
+        {
+            "name": "أثيوبي سيدامو",
+            "price": null
+        },
+        {
+            "name": "حبشي هراري",
+            "price": null
+        },
+        {
+            "name": "يمني عدني",
+            "price": null
+        },
+        {
+            "name": "يمني خولاني",
+            "price": null
+        },
+        {
+            "name": "يمني موكا",
+            "price": null
+        },
+        {
+            "name": "شوت إسبريسو (إضافة)",
+            "price": 25
+        },
+        {
+            "name": "فليفرز (إضافة)",
+            "price": 15
+        },
+        {
+            "name": "لبن (إضافة)",
+            "price": 20
+        },
+        {
+            "name": "مكسرات (إضافة)",
+            "price": 25
+        },
+        {
+            "name": "ويبيد كريم (إضافة)",
+            "price": 20
+        },
+        {
+            "name": "آيس كريم (إضافة)",
+            "price": 20
+        },
+        {
+            "name": "إضافة تحويجة للـ 250 جم",
+            "price": 30
+        },
+        {
+            "name": "إضافة مستكة للـ 250 جم",
+            "price": 50
+        }
+    ]
+};
 
-        window.onload = renderMenu;
+        let cart=[];
+        try { cart=JSON.parse(localStorage.getItem("rasmyCoffeeCart")||"[]"); if(!Array.isArray(cart)) cart=[]; } catch(e) { cart=[]; }
+        function safe(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+        function titleOf(x){return x.name||x.type}
+        function optionsOf(x){
+            if(Number.isFinite(x.single)&&Number.isFinite(x.double)) return [{label:"سنجل",price:x.single},{label:"دبل",price:x.double}];
+            if(Number.isFinite(x.sada)&&Number.isFinite(x.mahawag)) return [{label:"سادة · 250 جم",price:x.sada},{label:"محوج · 250 جم",price:x.mahawag}];
+            return null
+        }
+        function productOf(id){let p=id.split(":");return menuData[p[0]]?.[Number(p[1])]}
+        function details(){return cart.map(function(e){let x=productOf(e.id),o=x&&optionsOf(x),opt=o&&e.optionIndex>=0?o[e.optionIndex]:null;if(!x||(o&&!opt))return null;return {id:e.id,optionIndex:e.optionIndex,qty:e.qty,name:titleOf(x),option:opt,price:opt?opt.price:x.price}}).filter(Boolean)}
+        function drawMenu(){
+            Object.entries(menuData).forEach(function(pair){
+                let cat=pair[0],box=document.getElementById(cat);if(!box)return;
+                box.innerHTML=pair[1].map(function(x,i){
+                    let id=cat+":"+i,n=safe(titleOf(x)),opts=optionsOf(x),price=x.price==null?"السعر حسب الطلب":x.price+" ج.م";
+                    let select=opts?'<select class="item-option-select" aria-label="اختيار الحجم لـ '+n+'">'+opts.map(function(o,j){return '<option value="'+j+'">'+safe(o.label)+' · '+o.price+' ج.م</option>'}).join("")+'</select>':"";
+                    return '<article class="menu-item-card" data-product-id="'+id+'"><div><h5>'+n+'</h5><div class="product-price">'+(opts?"اختر الحجم أو التحويجة":price)+'</div>'+(x.price==null?'<small>يُحدد السعر عند تأكيد الطلب</small>':"")+'</div><div class="menu-item-action">'+select+'<button class="add-to-cart-btn" data-add type="button">أضف للسلة</button></div></article>'
+                }).join("")
+            })
+        }
+        function drawCart(){
+            cart=details().map(function(e){return {id:e.id,optionIndex:e.optionIndex,qty:e.qty}});
+            try{localStorage.setItem("rasmyCoffeeCart",JSON.stringify(cart))}catch(e){}
+            let d=details(),count=cart.reduce(function(s,e){return s+e.qty},0),unknown=d.some(function(e){return !Number.isFinite(e.price)});
+            document.getElementById("cartCount").textContent=count;
+            document.getElementById("cartItems").innerHTML=d.length?d.map(function(e){
+                let line=Number.isFinite(e.price)?e.price*e.qty+" ج.م":"حسب الطلب";
+                return '<article class="cart-line"><div><b>'+safe(e.name)+'</b><p>'+(e.option?safe(e.option.label):"")+'</p></div><strong>'+line+'</strong><div class="cart-line-controls"><button data-act="minus" data-id="'+safe(e.id)+'" data-opt="'+e.optionIndex+'">−</button><span>'+e.qty+'</span><button data-act="plus" data-id="'+safe(e.id)+'" data-opt="'+e.optionIndex+'">+</button><button data-act="remove" data-id="'+safe(e.id)+'" data-opt="'+e.optionIndex+'">حذف</button></div></article>'
+            }).join(""):'<p class="cart-empty">السلة فارغة الآن. أضف الأصناف التي تريدها من المنيو.</p>';
+            let total=d.reduce(function(s,e){return s+(Number.isFinite(e.price)?e.price*e.qty:0)},0);
+            document.getElementById("cartTotal").textContent=total+" ج.م";
+            document.getElementById("cartTotalLabel").textContent=unknown?"الإجمالي المبدئي":"الإجمالي";
+            document.getElementById("cartNote").textContent=unknown?"الأصناف التي سعرها حسب الطلب لا تدخل في الإجمالي المبدئي، وسيُحدد سعرها عند التأكيد عبر واتساب.":"راجع طلبك ثم أرسله إلى بن رسمي عبر واتساب.";
+            document.getElementById("cartCheckout").disabled=!d.length;
+            document.getElementById("cartClear").disabled=!d.length
+        }
+        function openCart(){let p=document.getElementById("cartPanel");p.hidden=false;p.setAttribute("aria-hidden","false");document.getElementById("cartBackdrop").hidden=false;document.getElementById("cartToggle").setAttribute("aria-expanded","true");document.getElementById("cartClose").focus()}
+        function closeCart(){let p=document.getElementById("cartPanel");p.hidden=true;p.setAttribute("aria-hidden","true");document.getElementById("cartBackdrop").hidden=true;document.getElementById("cartToggle").setAttribute("aria-expanded","false");document.getElementById("cartToggle").focus()}
+        document.querySelectorAll(".tab-btn").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll(".tab-btn,.menu-category-container").forEach(function(e){e.classList.remove("active")});document.getElementById(b.dataset.tab).classList.add("active");b.classList.add("active")})});
+        document.getElementById("menu").addEventListener("click",function(ev){let b=ev.target.closest("[data-add]");if(!b)return;let c=b.closest("[data-product-id]"),x=productOf(c.dataset.productId),o=optionsOf(x),sel=c.querySelector("select"),oi=o?Number(sel.value):-1,e=cart.find(function(v){return v.id===c.dataset.productId&&v.optionIndex===oi});if(e)e.qty=Math.min(99,e.qty+1);else cart.push({id:c.dataset.productId,optionIndex:oi,qty:1});drawCart()});
+        document.getElementById("cartItems").addEventListener("click",function(ev){let b=ev.target.closest("[data-act]");if(!b)return;let e=cart.find(function(v){return v.id===b.dataset.id&&v.optionIndex===Number(b.dataset.opt)});if(!e)return;if(b.dataset.act==="remove"||(b.dataset.act==="minus"&&e.qty===1))cart=cart.filter(function(v){return v!==e});else if(b.dataset.act==="plus")e.qty=Math.min(e.qty+1,99);else e.qty--;drawCart()});
+        document.getElementById("cartToggle").addEventListener("click",openCart);
+        document.getElementById("cartClose").addEventListener("click",closeCart);
+        document.getElementById("cartBackdrop").addEventListener("click",closeCart);
+        document.getElementById("cartClear").addEventListener("click",function(){cart=[];drawCart()});
+        document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!document.getElementById("cartPanel").hidden)closeCart()});
+        document.getElementById("cartCheckout").addEventListener("click",function(){
+            let d=details(),total=d.reduce(function(s,e){return s+(Number.isFinite(e.price)?e.price*e.qty:0)},0),unknown=d.some(function(e){return !Number.isFinite(e.price)});
+            if(!d.length)return;
+            let lines=["طلب جديد من موقع بن رسمي",""].concat(d.map(function(e){return "• "+e.name+(e.option?" ("+e.option.label+")":"")+" × "+e.qty+" — "+(Number.isFinite(e.price)?e.price*e.qty+" ج.م":"حسب الطلب")})).concat(["",unknown?"الإجمالي المبدئي للأصناف محددة السعر: "+total+" ج.م، والباقي حسب الطلب.":"الإجمالي: "+total+" ج.م","من فضلكم أكدوا الطلب."]);
+            let url=new URL("https://wa.me/201503377167");url.searchParams.set("text",lines.join("\n"));window.open(url.toString(),"_blank","noopener,noreferrer")
+        });
+        drawMenu();drawCart();
     </script>
 </body>
 </html>
