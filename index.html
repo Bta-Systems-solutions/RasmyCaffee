@@ -640,6 +640,9 @@
         .cart-line p,.cart-note{color:#c8b9a9;font-size:.85rem}.cart-line strong,.cart-total{color:var(--gold-light)}
         .cart-line-controls{grid-column:1/-1;display:flex;align-items:center;gap:8px}.cart-line-controls button{min-width:34px;height:34px;background:transparent;color:white;border:1px solid #8c5830;border-radius:7px}
         .cart-summary{margin-top:auto;padding-top:16px;border-top:1px solid #6f512b}.cart-note{line-height:1.7}
+        .cart-customer-form{display:grid;gap:10px;margin-top:14px}.cart-customer-field{display:grid;gap:5px}.cart-customer-field label{color:var(--gold-light);font-size:.9rem;font-weight:700}
+        .cart-customer-field input{width:100%;min-height:44px;padding:10px 12px;border:1px solid rgba(212,175,55,.45);border-radius:8px;background:#1a0f0a;color:var(--cream);font:inherit}
+        .cart-customer-field input:focus{outline:2px solid var(--gold);outline-offset:1px}.cart-data-note{margin:4px 0;color:#c8b9a9;font-size:.8rem;line-height:1.65}
         .cart-checkout,.cart-clear{width:100%;min-height:46px;margin-top:8px;border-radius:8px;font-weight:800}
         .cart-checkout{border:0;background:#25d366;color:#102c18}.cart-clear{border:1px solid #8c5830;background:transparent;color:white}
         .cart-checkout:disabled,.cart-clear:disabled{opacity:.45}
@@ -815,7 +818,13 @@
         <div class="cart-items" id="cartItems"></div>
         <div class="cart-summary"><div class="cart-total"><span id="cartTotalLabel">الإجمالي</span><span id="cartTotal">0 ج.م</span></div>
         <p class="cart-note" id="cartNote">راجع طلبك ثم أرسله إلى بن رسمي عبر واتساب.</p>
-        <button class="cart-checkout" id="cartCheckout" type="button" disabled>إرسال الطلب عبر واتساب</button>
+        <form class="cart-customer-form" id="orderCustomerForm">
+            <div class="cart-customer-field"><label for="customerName">الاسم</label><input id="customerName" name="customerName" type="text" autocomplete="name" maxlength="80" required></div>
+            <div class="cart-customer-field"><label for="customerPhone">رقم الهاتف</label><input id="customerPhone" name="customerPhone" type="tel" inputmode="tel" autocomplete="tel" minlength="8" maxlength="20" required></div>
+            <div class="cart-customer-field"><label for="customerAddress">العنوان</label><input id="customerAddress" name="customerAddress" type="text" autocomplete="street-address" maxlength="240" required></div>
+            <p class="cart-data-note">لن تُحفَظ البيانات في الموقع. عند الإرسال سيفتح واتساب برسالة تتضمن بياناتك وتفاصيل الطلب لإرسالها إلى بن رسمي.</p>
+            <button class="cart-checkout" id="cartCheckout" type="submit" disabled>إرسال الطلب عبر واتساب</button>
+        </form>
         <button class="cart-clear" id="cartClear" type="button" disabled>إفراغ السلة</button></div>
     </aside>
     <!-- سكريبت لتوليد المنيو كاملاً من ملف الـ PDF -->
@@ -1309,11 +1318,19 @@
         document.getElementById("cartClose").addEventListener("click",closeCart);
         document.getElementById("cartBackdrop").addEventListener("click",closeCart);
         document.getElementById("cartClear").addEventListener("click",function(){cart=[];drawCart()});
+        document.querySelectorAll("#orderCustomerForm input").forEach(function(field){field.addEventListener("input",function(){field.setCustomValidity("")})});
         document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!document.getElementById("cartPanel").hidden)closeCart()});
-        document.getElementById("cartCheckout").addEventListener("click",function(){
+        document.getElementById("orderCustomerForm").addEventListener("submit",function(ev){
+            ev.preventDefault();
             let d=details(),total=d.reduce(function(s,e){return s+(Number.isFinite(e.price)?e.price*e.qty:0)},0),unknown=d.some(function(e){return !Number.isFinite(e.price)});
             if(!d.length)return;
             let lines=["طلب جديد من موقع بن رسمي",""].concat(d.map(function(e){return "• "+e.name+(e.option?" ("+e.option.label+")":"")+" × "+e.qty+" — "+(Number.isFinite(e.price)?e.price*e.qty+" ج.م":"حسب الطلب")})).concat(["",unknown?"الإجمالي المبدئي للأصناف محددة السعر: "+total+" ج.م، والباقي حسب الطلب.":"الإجمالي: "+total+" ج.م","من فضلكم أكدوا الطلب."]);
+            let name=document.getElementById("customerName").value.trim(),phone=document.getElementById("customerPhone").value.trim(),address=document.getElementById("customerAddress").value.trim();
+            if(!name||!phone||!address){
+                let field=!name?document.getElementById("customerName"):!phone?document.getElementById("customerPhone"):document.getElementById("customerAddress");
+                field.setCustomValidity("من فضلك أدخل هذه البيانات.");field.reportValidity();return
+            }
+            lines.splice(2,0,"بيانات العميل:","الاسم: "+name,"رقم الهاتف: "+phone,"العنوان: "+address,"","تفاصيل الطلب:");
             let url=new URL("https://wa.me/201503377167");url.searchParams.set("text",lines.join("\n"));window.open(url.toString(),"_blank","noopener,noreferrer")
         });
         drawMenu();drawCart();
